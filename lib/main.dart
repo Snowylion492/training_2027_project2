@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 class TeamLabel extends StatelessWidget {
   final String name;
-
   const TeamLabel({super.key, required this.name});
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -25,7 +23,6 @@ class TeamLabel extends StatelessWidget {
   }
 }
 void main() {
-  VoidCallback? h;
   runApp(
     MaterialApp(
       theme: ThemeData(
