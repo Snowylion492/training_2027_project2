@@ -1,37 +1,42 @@
 import 'package:flutter/material.dart';
+class TeamLabel extends StatelessWidget {
+  final String name;
 
+  const TeamLabel({super.key, required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Icon(Icons.group),
+        const SizedBox(width: 8),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(name, textAlign: TextAlign.left,),
+            const SizedBox(width: 8),
+            Text('5 matches scouted', textAlign: TextAlign.left,)
+          ],
+        )
+      ],
+    );
+  }
+}
 void main() {
-  VoidCallback? onPressed;
+  VoidCallback? h;
   runApp(
     MaterialApp(
       theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.black, brightness: Brightness.dark), // Theme
+        colorScheme: .fromSeed(seedColor: Colors.black), // Theme
       ),
       home: Scaffold(
         appBar: AppBar(title: const Text('Reefscape Scouting')),
-        body: Column (
-          children: [
-            const Text('Scouting Practice'),
-            const Text(' '),
-            const Text('Team 2046'),
-        Row(
-               mainAxisAlignment: MainAxisAlignment.center,
-               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text('Coral Scored: 0'),
-                SizedBox(
-                  width: 25,
-               height: 25,
-               child : FilledButton(onPressed: onPressed,child : Text('+'), style: FilledButton.styleFrom(shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),   padding: EdgeInsets.zero,
-                 alignment: Alignment.center,),),
-
-                )
-              ],
-            ),
-            FilledButton.tonal(onPressed: onPressed, child: Text('Submit'))
-        ]
+        body:
+Center(child: TeamLabel(name: 'Bear Metal')
         ),
       ),
-    ),
+  )
   );
 }
