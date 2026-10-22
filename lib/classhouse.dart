@@ -1,7 +1,7 @@
 import 'main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-
+import 'darkmode.dart';
 class Scoring extends StatelessWidget {
   final String level;
   final double x;
@@ -35,43 +35,47 @@ class Reefscape extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(width: 800, height: 80, child: TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Team number',
-            ),
-          ),
-          ),SizedBox(width: 800, height: 80, child: TextField(
-            decoration: InputDecoration(
+    Row(
+     children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(width: 800, height: 80, child: TextField(
+              decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Match number'
+                hintText: 'Team number',
+              ),
             ),
-          ),
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Scoring(level: 'L1', x: 50),
-              Scoring(level: 'L2', x: 50),
-              Scoring(level: 'L3', x: 50),
-              Scoring(level: 'L4', x: 50),
-            ],
-          ),
-          SizedBox(height: 80),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Scoring(level: '      Algae in Processor', x: 200),
-              Scoring(level: '        Algae in Barge', x: 200),
-            ],
-          )
-        ],
+            ),SizedBox(width: 800, height: 80, child: TextField(
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Match number'
+              ),
+            ),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Scoring(level: 'L1', x: 50),
+                Scoring(level: 'L2', x: 50),
+                Scoring(level: 'L3', x: 50),
+                Scoring(level: 'L4', x: 50),
+              ],
+            ),
+            SizedBox(height: 80),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Scoring(level: '      Algae in Processor', x: 200),
+                Scoring(level: '        Algae in Barge', x: 200),
+              ],
+            )
+          ],
+        ),
+      ]
       );
   }
 }
