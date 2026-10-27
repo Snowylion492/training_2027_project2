@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
 
-import 'classhouse.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'darkmode.dart';
-import 'package:go_router/go_router.dart';
-
+import 'gorouter.dart';
 // What you need to collect:
 // Team number (int)
 // Match number (int)
 // Scoring coral in the trough (L1), L2, L3, and L4. (int)
 // Scoring algae in the net (int)
+
 // Processing algae (int)
+class MyApp extends StatelessWidget {
+  /// Constructs a [MyApp]
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerConfig: router);
+  }
+}
 final name = Provider<String>((ref) {
   return 'Reefscape Scouting App';
 });
@@ -29,17 +38,7 @@ class AppTitle extends ConsumerWidget {
 void main() {
   runApp(
     ProviderScope(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: .fromSeed(seedColor: Colors.black), // Theme
-        ),
-        darkTheme: ThemeData(brightness: Brightness.dark),
-        home: Scaffold(
-          appBar: AppBar(title: Text('Reefscape Scouting App')),
-          body: Center(child: Row(children: [Reefscape()])),
-        ),
-      ),
+        child : const MyApp()
     ),
   );
 }
