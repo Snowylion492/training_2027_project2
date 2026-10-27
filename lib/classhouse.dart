@@ -19,7 +19,6 @@ class ScoringState extends State<Scoring> {
   final String level;
   final double x;
   int score;
-
   ScoringState({required this.level, required this.x, required this.score});
 
   @override
@@ -61,6 +60,8 @@ class Reefscape extends StatefulWidget {
   }
 }
 class ReefscapeStateful extends State<Reefscape> {
+ String realTimeInput = '';
+ String otherRealTimeInput = '';
   @override
 
   Widget build(BuildContext context) {
@@ -71,13 +72,23 @@ class ReefscapeStateful extends State<Reefscape> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(width: 800, height: 80, child: TextField(
+            SizedBox(width: 800, height: 80, child: TextField(onChanged: (number) {
+      setState(() {
+        // Updates the variable automatically on every single keystroke
+        realTimeInput = number;
+      });
+    },
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Team number',
               ),
             ),
-            ),SizedBox(width: 800, height: 80, child: TextField(
+            ),SizedBox(width: 800, height: 80, child: TextField(onChanged: (Number) {
+    setState(() {
+    // Updates the variable automatically on every single keystroke
+    otherRealTimeInput = Number;
+    });
+    },
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Match number'
@@ -102,7 +113,12 @@ class ReefscapeStateful extends State<Reefscape> {
                 Scoring(level: '      Algae in Processor', x: 200, score: 0),
                 Scoring(level: '        Algae in Barge', x: 200, score: 0),
               ],
-            )
+            ),
+            FilledButton(onPressed: () => setState(() {
+              String teamNumber = realTimeInput;
+              String matchNumber = otherRealTimeInput;
+// Just add the saving stuff later Jackson
+            }), child: Text('Save data') )
           ],
         ),
       ]
