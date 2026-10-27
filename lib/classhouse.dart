@@ -1,12 +1,33 @@
-import 'main.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+
+import 'classhouse.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'darkmode.dart';
-class Scoring extends StatelessWidget {
+import 'package:go_router/go_router.dart';
+
+class Scoring extends StatefulWidget {
   final String level;
   final double x;
-  const Scoring({super.key, required this.level, required this.x});
+  final int score;
+
+  const Scoring({super.key, required this.level, required this.x, required this.score});
   @override
+  State<Scoring> createState(){
+  return  ScoringState(level: level, x: x, score: score);
+  }
+}
+
+class ScoringState extends State<Scoring> {
+  final String level;
+  final double x;
+  int score;
+
+  ScoringState({required this.level, required this.x, required this.score});
+
+  @override
+
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -16,12 +37,19 @@ class Scoring extends StatelessWidget {
 
           children: [
             SizedBox(width: x, child: Text('     $level')),
-
+            Row(
+              children: [
             IconButton(
-              onPressed: null, // functionality goes here
+              onPressed: () => setState(() {score++;}),
               icon: Icon(Icons.plus_one),
             ),
-            Text(('insert variable'), textAlign: TextAlign.left)
+                IconButton(
+                  onPressed: () => setState(() {score--;}),
+                  icon: Icon(Icons.exposure_minus_1),
+                ),
+    ]
+            ),
+            Text(('$score'), textAlign: TextAlign.left)
           ],
         ),
         SizedBox(width: 75),
@@ -29,10 +57,16 @@ class Scoring extends StatelessWidget {
     );
   }
 }
-
-class Reefscape extends StatelessWidget {
+class Reefscape extends StatefulWidget {
   const Reefscape({super.key});
   @override
+  State<StatefulWidget> createState() {
+    return ReefscapeStateful();
+  }
+}
+class ReefscapeStateful extends State<Reefscape> {
+  @override
+
   Widget build(BuildContext context) {
     return
     Row(
@@ -58,10 +92,10 @@ class Reefscape extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Scoring(level: 'L1', x: 50),
-                Scoring(level: 'L2', x: 50),
-                Scoring(level: 'L3', x: 50),
-                Scoring(level: 'L4', x: 50),
+                Scoring(level: 'L1', x: 50, score: 0),
+                Scoring(level: 'L2', x: 50, score: 0),
+                Scoring(level: 'L3', x: 50, score: 0),
+                Scoring(level: 'L4', x: 50, score: 0),
               ],
             ),
             SizedBox(height: 80),
@@ -69,8 +103,8 @@ class Reefscape extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Scoring(level: '      Algae in Processor', x: 200),
-                Scoring(level: '        Algae in Barge', x: 200),
+                Scoring(level: '      Algae in Processor', x: 200, score: 0),
+                Scoring(level: '        Algae in Barge', x: 200, score: 0),
               ],
             )
           ],

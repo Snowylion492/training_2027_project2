@@ -5,6 +5,7 @@ import 'classhouse.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'darkmode.dart';
+import 'package:go_router/go_router.dart';
 
 // What you need to collect:
 // Team number (int)
@@ -14,9 +15,6 @@ import 'darkmode.dart';
 // Processing algae (int)
 final name = Provider<String>((ref) {
   return 'Reefscape Scouting App';
-});
-final themeToggleProvider = NotifierProvider<ThemeToggle, bool>(() {
-  return ThemeToggle();
 });
 
 class AppTitle extends ConsumerWidget {
@@ -39,9 +37,49 @@ void main() {
         darkTheme: ThemeData(brightness: Brightness.dark),
         home: Scaffold(
           appBar: AppBar(title: Text('Reefscape Scouting App')),
-          body: Center(child: Row(children: [Reefscape(), SettingsScreen()])),
+          body: Center(child: Row(children: [Reefscape()])),
         ),
       ),
     ),
   );
 }
+// example time!
+// void main() => runApp(const MyApp());
+// final GoRouter _router = GoRouter(
+//   routes: <RouteBase>[
+//     GoRoute(
+//       path: '/',
+//       builder: (BuildContext context, GoRouterState state) {
+//         return const HomeScreen();
+//       },
+//       routes: <RouteBase>[
+//         GoRoute(
+//           path: 'details',
+//           builder: (BuildContext context, GoRouterState state) {
+//             return const DetailsScreen();
+//           },
+//         ),
+//       ],
+//     ),
+//   ],
+// );/// The home screen
+// class HomeScreen extends StatelessWidget {
+//   /// Constructs a [HomeScreen]
+//   const HomeScreen({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: const Text('Home Screen')),
+//       body: Center(
+//         child: ElevatedButton(
+//           onPressed: () => context.go('/details'),
+//           child: const Text('Go to the Details screen'),
+//         ),
+//       ),
+//     );
+//   }
+// }
+//
+// /// The details screen
+//
