@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'gorouter.dart';
+
 // What you need to collect:
 // Team number (int)
 // Match number (int)
@@ -18,10 +18,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        routerConfig: router);
+      debugShowCheckedModeBanner: false,
+      routerConfig: router,
+    );
   }
 }
+
 final name = Provider<String>((ref) {
   return 'Reefscape Scouting App';
 });
@@ -36,11 +38,7 @@ class AppTitle extends ConsumerWidget {
 }
 
 void main() {
-  runApp(
-    ProviderScope(
-        child : const MyApp()
-    ),
-  );
+  runApp(ProviderScope(child: const MyApp()));
 }
 // example time!
 // void main() => runApp(const MyApp());
