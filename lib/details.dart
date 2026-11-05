@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'classhouse.dart';
+import 'reefscape.dart';
 
 class DetailsScreen extends StatelessWidget {
   /// Constructs a [DetailsScreen]
@@ -10,7 +10,7 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Scouting Screen')),
-      body: Row(children: [Reefscape()]),
+      body: Row(children: [Reefscape(eventKey: '2026cmptx')]),
     );
   }
 }
