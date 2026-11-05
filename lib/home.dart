@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'classhouse.dart';
-
+import 'teamInfo.dart';
 import 'package:go_router/go_router.dart';
-
 class HomeScreen extends StatelessWidget {
   /// Constructs a [HomeScreen]
   const HomeScreen({super.key});

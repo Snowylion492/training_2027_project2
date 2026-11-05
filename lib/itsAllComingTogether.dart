@@ -1,116 +1,11 @@
 import 'package:flutter/material.dart';
-
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
+import 'teamProvider.dart';
+import 'scoring.dart';
+import 'reefscape.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 const tbaApiKey = String.fromEnvironment('TBA_API_KEY');
-final teamProvider = FutureProvider.autoDispose
-    .family<List<Map<String, dynamic>>, String>((ref, eventKey) async {
-      final response = await http.get(
-        Uri.parse(
-          'https://www.thebluealliance.com/api/v3/event/$eventKey/teams',
-        ),
-        headers: {'X-TBA-Auth-key': tbaApiKey},
-      );
 
-      if (response.statusCode != 200) {
-        throw Exception('Failed to load teams for event $eventKey');
-      }
-
-      final List<dynamic> jsonList = jsonDecode(response.body);
-
-      return jsonList.cast<Map<String, dynamic>>();
-    });
-
-class TeamInfo extends ConsumerWidget {
-  final String eventKey;
-
-  const TeamInfo({super.key, required this.eventKey});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final teams = ref.watch(teamProvider(eventKey));
-
-    return teams.when(
-      loading: () => const CircularProgressIndicator(),
-      error: (error, stack) => Text('Error: $error'),
-      data: (teamList) => Expanded(
-        child: ListView.builder(
-          itemCount: teamList.length,
-          itemBuilder: (context, index) {
-            final team = teamList[index];
-
-            return ListTile(
-              title: Text(
-                '${team['team_number']} - '
-                '${team['nickname'] ?? 'Unknown'}',
-              ),
-              subtitle: Text(
-                '${team['city'] ?? 'Unknown'}, '
-                '${team['state_prov'] ?? ''}',
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class Scoring extends StatelessWidget {
-  final String level;
-  final double x;
-  final int score;
-  final ValueChanged<int> onScoreChanged;
-
-  const Scoring({
-    super.key,
-    required this.level,
-    required this.x,
-    required this.score,
-    required this.onScoreChanged,
-  });
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const SizedBox(width: 50),
-        Column(
-          children: [
-            SizedBox(width: x, child: Text('     $level')),
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () => onScoreChanged(score + 1),
-                  icon: const Icon(Icons.plus_one),
-                ),
-                IconButton(
-                  onPressed: () => onScoreChanged(score - 1),
-                  icon: const Icon(Icons.exposure_minus_1),
-                ),
-              ],
-            ),
-            Text('$score', textAlign: TextAlign.left),
-          ],
-        ),
-        const SizedBox(width: 75),
-      ],
-    );
-  }
-}
-
-class Reefscape extends StatefulWidget {
-  const Reefscape({super.key});
-  @override
-  State<StatefulWidget> createState() {
-    return ReefscapeStateful();
-  }
-}
-
-class ReefscapeStateful extends State<Reefscape> {
+class ReefscapeStateful extends ConsumerState<Reefscape> {
   String realTimeInput = '';
   String otherRealTimeInput = '';
   List<Map<String, dynamic>> savedMatches = [];
@@ -178,19 +73,40 @@ class ReefscapeStateful extends State<Reefscape> {
             SizedBox(
               width: 800,
               height: 80,
-              child: TextField(
-                onChanged: (number) {
-                  setState(() {
-                    // Updates the variable automatically on every single keystroke
-                    realTimeInput = number;
-                  });
-                },
-                controller: teamController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Team number',
-                ),
-              ),
+              child: ref
+                  .watch(teamProvider('2026cmptx'))
+                  .when(
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
+                    error: (error, stack) => Text('Error: $error'),
+                    data: (teamList) {
+                      return DropdownButtonFormField<String>(
+                        value: realTimeInput.isEmpty ? null : realTimeInput,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Select a team',
+                        ),
+                        items: teamList.map((team) {
+                          final number = team['team_number'].toString();
+                          final nickname = team['nickname'] ?? 'Unknown';
+
+                          return DropdownMenuItem<String>(
+                            value: number,
+                            child: Text('$number - $nickname'),
+                          );
+                        }).toList(),
+                        onChanged: (number) {
+                          if (number == null) return;
+
+                          setState(() {
+                            realTimeInput = number;
+                            teamController.text = number;
+                            selectedMatchIndex = null;
+                          });
+                        },
+                      );
+                    },
+                  ),
             ),
             SizedBox(
               width: 800,

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'gorouter.dart';
-
 // What you need to collect:
 // Team number (int)
 // Match number (int)
